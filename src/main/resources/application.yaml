@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+# 默认的profile为dev，其他环境通过指定启动参数使用不同的profile，比如：
+#   测试环境：java -jar my-spring-boot.jar --spring.profiles.active=dev
+#   生产环境：java -jar my-spring-boot.jar --spring.profiles.active=online
+spring:
+  profiles:
+    active: dev
+
+---
+# 开发环境配置
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://172.21.15.112:3306/abc?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: passw0rd
+    driver-class-name: com.mysql.jdbc.Driver
+    max-idle: 10
+    max-wait: 100
+    min-idle: 5
+    initial-size: 5
+    validation-query: SELECT 1
+    test-on-borrow: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 18800
+    jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+---
+
+# 线上环境配置
+spring:
+  profiles: online
+  datasource:
+    url: jdbc:mysql://172.21.15.112:3306/abc?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: passw0rd
+    driver-class-name: com.mysql.jdbc.Driver
+    max-idle: 100
+    max-wait: 1000
+    min-idle: 50
+    initial-size: 100
+    validation-query: SELECT 1
+    test-on-borrow: false
+    test-while-idle: true
+    time-between-eviction-runs-millis: 18800
+    jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.MySQL5Dialect
