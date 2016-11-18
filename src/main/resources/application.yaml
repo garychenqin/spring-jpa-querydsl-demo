@@ -13,9 +13,9 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://172.21.15.112:3306/abc?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    url: jdbc:mysql://cp01-bpit-art-win7-uuap-dev01.epc.baidu.com:8100/sensitive?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     username: root
-    password: passw0rd
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     max-idle: 10
     max-wait: 100
@@ -36,6 +36,17 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    host-name: 120.27.34.1
+    port: 8000
+    password: gary001
+    timeout: 100
+    default-expiration: 10
+    pool:
+      max-idle: 10
+      min-idle: 2
+      max-active: 20
+      max-wait: 5
 
 ---
 
@@ -66,3 +77,14 @@ spring:
       hibernate:
         format_sql: false
         dialect: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    host-name: redis-18101.c8.us-east-1-4.ec2.cloud.redislabs.com
+    port: 18101
+    password: gary643066959q
+    timeout: 1000
+    default-expiration: 10
+    pool:
+      max-idle: 10
+      min-idle: 2
+      max-active: 20
+      max-wait: 5

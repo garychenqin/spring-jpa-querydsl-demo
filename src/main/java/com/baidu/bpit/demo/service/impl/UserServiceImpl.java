@@ -9,9 +9,13 @@ import com.mysema.query.BooleanBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -20,9 +24,13 @@ import java.util.List;
  * Created by chenshouqin on 2016-11-17 21:51.
  */
 @Service
+@CacheConfig(cacheNames = "users")
 public class UserServiceImpl implements UserService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private UserRepository userRepository;
@@ -40,6 +48,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Cacheable(key = "#p0")
     public User findUniqueUserByName(String name) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(QUser.user.name.eq(name));

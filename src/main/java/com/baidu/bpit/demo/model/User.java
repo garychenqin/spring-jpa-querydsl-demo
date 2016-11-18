@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * Created by chenshouqin on 2016-11-17 21:28.
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 @DynamicUpdate
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue
