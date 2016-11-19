@@ -19,6 +19,7 @@
         <querydsl.version>3.6.4</querydsl.version>
         <dozer.version>5.4.0</dozer.version>
         <guava.version>19.0</guava.version>
+        <protostuff.version>1.0.12</protostuff.version>
     </properties>
 
     <dependencies>
