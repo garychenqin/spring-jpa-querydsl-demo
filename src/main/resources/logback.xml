@@ -1,12 +1,21 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+
+    <property name="LOG_LEVEL_PATTERN"
+              value="[${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]"/>
+
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN} %level [%thread] %logger{35} - %msg%n"/>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread] %logger{35} - %msg%n</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <logger name="com.baidu.bpit.demo" level="INFO" additivity="false">
+    <logger name="com.baidu.spring_cloud" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
