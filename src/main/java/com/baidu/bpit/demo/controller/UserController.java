@@ -21,7 +21,7 @@ public class UserController {
 
     @RequestMapping("/addUser")
     public void addUser(User user) {
-        userService.deleteUser();
+        userService.insertUser(user);
     }
 
     @ResponseBody
