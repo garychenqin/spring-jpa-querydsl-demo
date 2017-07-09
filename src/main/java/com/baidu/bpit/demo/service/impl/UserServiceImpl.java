@@ -4,6 +4,7 @@ import com.baidu.bpit.demo.dao.UserRepository;
 import com.baidu.bpit.demo.model.QUser;
 import com.baidu.bpit.demo.model.User;
 import com.baidu.bpit.demo.service.UserService;
+import com.baidu.bpit.demo.utils.JedisTemplate;
 import com.google.common.base.Optional;
 import com.mysema.query.BooleanBuilder;
 import org.slf4j.Logger;
@@ -13,9 +14,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.JedisPoolConfig;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private JedisTemplate jedisTemplate;
 
     @Autowired
     private UserRepository userRepository;
