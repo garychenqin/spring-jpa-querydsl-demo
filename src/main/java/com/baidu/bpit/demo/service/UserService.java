@@ -14,4 +14,5 @@ public interface UserService {
     List<User> findBatchUserByName(String name);
     User findById(Long id);
     void updateUser(User user);
+    void deleteUser();
 }

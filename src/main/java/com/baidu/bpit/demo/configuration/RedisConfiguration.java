@@ -1,5 +1,6 @@
 package com.baidu.bpit.demo.configuration;
 
+import com.baidu.bpit.demo.utils.JedisTemplate;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,6 +47,15 @@ public class RedisConfiguration {
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+    @Bean
+    public JedisTemplate jedisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<byte[], byte[]>();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        redisTemplate.setKeySerializer(null);
+        redisTemplate.setValueSerializer(null);
+        return new JedisTemplate(redisTemplate);
     }
 
     @Bean

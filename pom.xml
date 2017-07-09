@@ -19,7 +19,8 @@
         <querydsl.version>3.6.4</querydsl.version>
         <dozer.version>5.4.0</dozer.version>
         <guava.version>19.0</guava.version>
-        <protostuff.version>1.0.12</protostuff.version>
+        <protostuff.version>1.1.1</protostuff.version>
+        <project.build.jdk>1.7</project.build.jdk>
     </properties>
 
     <dependencies>
@@ -70,6 +71,17 @@
             <version>${guava.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dyuproject.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+
     </dependencies>
 
     <!-- Profiles -->
@@ -92,7 +104,36 @@
     </profiles>
 
     <build>
+        <filters>
+            <filter>profiles/${env}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
         <plugins>
+            <!--https://github.com/spring-projects/spring-boot/wiki
+            /Spring-Boot-1.3-Release-Notes#maven-resources-filtering-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -116,12 +157,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!--build runnable jar begin-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
 
             <plugin>
